@@ -23,6 +23,7 @@ class RecommendationEngine:
         else:
             raise Exception("OpenAI not implemented")    
 
+
 async def get_recommendations(self, keyword_phrase):
     prompt = f"""Please return 5 recommendations based on the input string: '{keyword_phrase}' using correct JSON syntax that contains a title and a hyperlink back to the supporting website. RETURN ONLY JSON AND NOTHING ELSE"""
     system_prompt = """You are an administrative assistant bot who is good at giving 
@@ -61,3 +62,15 @@ async def get_recommendations(self, keyword_phrase):
         recommendation = [{"title": "Sorry, unable to recommendation at this time", "link": ""}]
 
     return recommendation
+
+
+async def test_recommendation_engine():
+    engine = RecommendationEngine()
+    recommendations = await engine.get_recommendations("Buy a birthday gift for mom")
+    count = 1
+    for recommendation in recommendations:
+        print(f"{count} - {recommendation['title']}: {recommendation['link']}")
+        count += 1
+
+if __name__ == "__main__":
+    asyncio.run(test_recommendation_engine())
