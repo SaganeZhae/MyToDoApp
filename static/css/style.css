@@ -1,0 +1,20 @@
+body {
+    color: rgb(45, 39, 55);  /* default font color */
+    font-family: Arial, sans-serif;
+    background-image: url("../images/Designer02.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+
+label {
+    color: rgb(248, 252, 254)
+}
+
+h1 {
+    color: rgb(52, 55, 87); /* font for the h1 header*/
+}
+
+.list-group-item {
+    color: #333; /* dark grey */
+}
