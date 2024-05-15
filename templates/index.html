@@ -73,6 +73,19 @@
 
             </div>
             <div class="col-5">
+                {% if g.selectedTab != g.TabEnum.NONE %}
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a id="details-tab" class="nav-link" aria-current="page" href="{{ url_for('details', id=g.todo.id) }}">Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="edit-tab" class="nav-link" href="{{ url_for('edit', id=g.todo.id) }}">Edit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="recommendations-tab" class="nav-link" href="{{ url_for('recommend', id=g.todo.id) }}">Recommendations</a>
+                        </li>
+                    </ul>
+                {% endif %}
                 {% if g.todo != None and g.selectedTab == g.TabEnum.RECOMMENDATIONS %}       
                 <div id="recommendations-div" class="card">                     
                     <div class="card-body">
