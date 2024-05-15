@@ -7,9 +7,20 @@ from recommendation_engine import RecommendationEngine
 import os
 
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "todos.db")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# mssql+pyodbc://<sql user name>:<password>@<azure sql server>.database.windows.net:1433/todo?driver=ODBC+Driver+17+for+SQL+Server
+connection_string = os.environ.get("SQLAZURECONNSTR_AZURE_SQL_CONNECTIONSTRING", '')
+
+# Use local database if Azure SQL server is not configured
+if not connection_string:
+    print('Azure SQL not configured, Using local SQLLite database')
+    basedir = os.path.abspath(os.path.dirname(__file__))   # Get the directory of the this file
+    print('Base directory:', basedir)
+    todo_file = os.path.join(basedir, 'todo_list.txt')     # Create the path to the to-do list file using the directory
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(basedir, 'todos.db')
+else:
+    print('Using Azure SQL database')
+    app.config["SQLALCHEMY_DATABASE_URI"] = connection_string
+
 
 @app.context_processor
 def inject_common_variables():
